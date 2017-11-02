@@ -41,22 +41,19 @@ export default {
   },
   methods: {
     async fetchScoreBoard () {
-      // Please enable 'Allow-Control-Allow-Origin' extension.
-      // TODO : Set 'referer' header to 'stats.nba.com' in node server
-      // https://data.nba.com/data/10s/v2015/json/mobile_teams/nba/2017/scores/00_todays_scores.json
-      const { data: { lscd } } = await axios.get('https://data.nba.com/data/10s/v2015/json/mobile_teams/nba/2017/league/00_full_schedule_week.json')
+      const { data: { lscd } } = await axios.get('http://localhost:8081/https://data.nba.com/data/10s/v2015/json/mobile_teams/nba/2017/league/00_full_schedule_week.json')
 
       this.scores = lscd
     }
   },
   computed: {
     currentMonthGames () {
-      const currentMonth = this.scores.map(c => c.mscd).find(c => c.mon === 'October')
+      const currentMonth = this.scores.map(c => c.mscd).find(c => c.mon === 'November')
 
       return currentMonth ? currentMonth.g : []
     },
     todayGames () {
-      return this.currentMonthGames.filter(g => g.gdte === '2017-10-26')
+      return this.currentMonthGames.filter(g => g.gdte === '2017-11-01')
     }
   }
 }

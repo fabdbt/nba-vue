@@ -5,13 +5,15 @@
   "author": "Fabien Dobat <fabien.dobat@seniormedia.fr>",
   "private": true,
   "scripts": {
-    "dev": "node build/dev-server.js",
+    "dev": "node_modules/foreman/nf.js start",
+    "cors": "node cors.js",
     "start": "npm run dev",
     "build": "node build/build.js",
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
     "axios": "^0.17.0",
+    "cors-anywhere": "^0.4.0",
     "vue": "^2.5.2"
   },
   "devDependencies": {
@@ -40,6 +42,7 @@
     "express": "^4.14.1",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^1.1.4",
+    "foreman": "^2.0.0",
     "friendly-errors-webpack-plugin": "^1.6.1",
     "html-webpack-plugin": "^2.30.1",
     "http-proxy-middleware": "^0.17.3",
