@@ -1,17 +1,45 @@
 <template>
   <div class='scoreboard'>
-    <h1>NBA scores</h1>
-    <p>
-      <a href='#' @click='onPrev' v-if='!fetching'><<</a>
-      <b>{{ formattedDate }}</b>
-      <a href='#' @click='onNext' v-if='!fetching'>>></a>
-    </p>
-    <span v-show='fetching'>Fetching ...</span>
-    <ul>
-      <li v-for='{ homeTeam, awayTeam, boxscore } in games'>
-        {{ awayTeam.profile.name }} @ {{ homeTeam.profile.name }} => {{ boxscore.awayScore }} - {{ boxscore.homeScore }}
-      </li>
-    </ul>
+    <div class='content'>
+      <h1>NBA scores</h1>
+      <p>
+        <b>{{ formattedDate }}</b>
+      </p>
+      <nav class="pagination is-small" role="navigation" aria-label="pagination">
+        <a class="pagination-previous" @click='onPrev' :disabled='fetching'>Previous</a>
+        <a class="pagination-next" @click='onNext' :disabled='fetching'>Next page</a>
+      </nav>
+      <!-- <span v-show='fetching'>Fetching ...</span> -->
+      <transition-group name='list-complete' tag='p'>
+        <div class='box list-complete-item' :key='index' v-for='({ homeTeam, awayTeam, boxscore, profile }, index) in games'>
+          <div class='columns'>
+            <div class='column'>
+              <div class='score-detail'>
+                <div class='name is-pulled-left'>
+                  <b>{{ awayTeam.profile.name }}</b>
+                  {{ toLocaleTime(profile.utcMillis) }}
+                </div>
+                <div class='score is-pulled-right'>
+                  {{ boxscore.awayScore }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class='columns'>
+            <div class='column'>
+              <div class='score-detail'>
+                <div class='name is-pulled-left'>
+                  <b>{{ homeTeam.profile.name }}</b>
+                </div>
+                <div class='score is-pulled-right'>
+                  {{ boxscore.homeScore }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </transition-group>
+    </div>
   </div>
 </template>
 
@@ -59,6 +87,9 @@ export default {
       this.date = new Date(this.date.getTime() - 86400000)
 
       await this.fetchGames()
+    },
+    toLocaleTime (utcMillis) {
+      return new Date(parseInt(utcMillis)).toLocaleString().split(',')[1]
     }
   },
   computed: {
@@ -70,21 +101,28 @@ export default {
 </script>
 
 <style scoped>
-h1, h2 {
-  font-weight: normal;
+.list-complete-item {
+  transition: all 0.2s;
+}
+.list-complete-enter, .list-complete-leave-to {
+  opacity: 0;
+}
+.list-complete-leave-active {
+  /*transition: all 0.5s;*/
+  /*opacity: 0;*/
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
+.box {
+/*  transition: all 2s;
+  -webkit-transition: all 2s;
+*/}
+.score {
+  /*text-align: left;*/
 }
 
-li {
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-  text-decoration: none;
-}
+.score > .score-detail {
+  /*background-color: red;*/
+/*  width: 100%;
+  height: 100%;
+*/}
 </style>

@@ -1,12 +1,17 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <ScoreBoard/>
+    <section class="section">
+      <div class="container">
+        <img src="./assets/logo.png">
+        <ScoreBoard/>
+      </div>
+    </section>
   </div>
 </template>
 
 <script>
 import ScoreBoard from './components/ScoreBoard'
+import 'bulma/css/bulma.css'
 
 export default {
   name: 'app',
