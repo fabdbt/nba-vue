@@ -37,7 +37,7 @@ export default {
       this.fetching = true
 
       try {
-        const { data } = await axios.get(`http://localhost:8081/http://fr.global.nba.com/stats2/scores/daily.json`, { params: {
+        const { data } = await axios.get(`https://cors-anywhere.herokuapp.com/http://fr.global.nba.com/stats2/scores/daily.json`, { params: {
           gameDate: this.formattedDate,
           countryCode: 'FR',
           locale: 'FR'
