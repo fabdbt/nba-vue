@@ -1,26 +1,13 @@
 <template>
-  <div class="scoreboard">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
+  <div class='scoreboard'>
+    <h1>NBA scores</h1>
+    <h2>{{ formattedDate }}</h2>
+    <a href='#' @click='onPrev'>Precedent</a>
+    <a href='#' @click='onNext'>Suivant</a>
     <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-      <br>
-      <li><a href="http://vuejs-templates.github.io/webpack/" target="_blank">Docs for This Template</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li v-for='game in todayGames'>
-        {{ game.v.tc }} @ {{ game.h.tc }} {{ game.etm }} => {{ game.v.s }} - {{ game.h.s }}
+      <li v-for='game in games'>
+        {{ game.awayTeam.profile.name }} @ {{ game.homeTeam.profile.name }} => {{ game.boxscore.awayScore }} - {{ game.boxscore.homeScore }}
       </li>
-    </ul>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
     </ul>
   </div>
 </template>
@@ -32,28 +19,33 @@ export default {
   name: 'ScoreBoard',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App',
-      scores: []
+      games: [],
+      date: new Date()
     }
   },
   created () {
-    this.fetchScoreBoard()
+    this.fetchGames()
   },
   methods: {
-    async fetchScoreBoard () {
-      const { data: { lscd } } = await axios.get('http://localhost:8081/https://data.nba.com/data/10s/v2015/json/mobile_teams/nba/2017/league/00_full_schedule_week.json')
+    async fetchGames () {
+      const { data } = await axios.get(`http://localhost:8081/http://fr.global.nba.com/stats2/scores/daily.json?countryCode=FR&gameDate=${this.formattedDate}&locale=fr&tz=%2B1`)
 
-      this.scores = lscd
+      this.games = data.payload.date.games
+    },
+    async onNext () {
+      this.date = new Date(this.date.getTime() + 86400000)
+
+      await this.fetchGames()
+    },
+    async onPrev () {
+      this.date = new Date(this.date.getTime() - 86400000)
+
+      await this.fetchGames()
     }
   },
   computed: {
-    currentMonthGames () {
-      const currentMonth = this.scores.map(c => c.mscd).find(c => c.mon === 'November')
-
-      return currentMonth ? currentMonth.g : []
-    },
-    todayGames () {
-      return this.currentMonthGames.filter(g => g.gdte === '2017-11-01')
+    formattedDate () {
+      return `${this.date.toISOString().split('T')[0]}`
     }
   }
 }
