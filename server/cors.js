@@ -6,7 +6,7 @@ var host = process.env.HOST || '0.0.0.0'
 var port = process.env.PORT || 8081
 
 corsProxy.createServer({
-  originWhitelist: ['http://localhost:8080'], // Allow all origins
+  originWhitelist: ['http://localhost:8080', 'https://nba.now.sh'],
   requireHeader: ['Origin'],
   removeHeaders: ['cookie', 'User-Agent', 'Host', 'Origin'],
   setHeaders: { 'Host': 'stats.nba.com', 'Referer': 'http://stats.nba.com/' }

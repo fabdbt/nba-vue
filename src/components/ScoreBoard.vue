@@ -65,7 +65,7 @@ export default {
       this.fetching = true
 
       try {
-        const { data } = await axios.get(`https://nba-vue-server-takiwyotly.now.sh/http://fr.global.nba.com/stats2/scores/daily.json`, { params: {
+        const { data } = await axios.get(`https://nba-proxy.now.sh/http://fr.global.nba.com/stats2/scores/daily.json`, { params: {
           gameDate: this.formattedDate,
           countryCode: 'FR',
           locale: 'FR'
