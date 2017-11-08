@@ -1,0 +1,16 @@
+{
+  "name": "nba-vue-server",
+  "version": "1.0.0",
+  "description": "A Node JS project",
+  "author": "Fabien Dobat <fabien.dobat@seniormedia.fr>",
+  "private": true,
+  "scripts": {
+    "dev": "node cors.js",
+    "start": "node cors.js",
+    "build": "true",
+    "lint": "eslint --ext .js,.vue src"
+  },
+  "dependencies": {
+    "cors-anywhere": "^0.4.0"
+  }
+}
