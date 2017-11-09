@@ -11,32 +11,8 @@
       </nav>
       <!-- <span v-show='fetching'>Fetching ...</span> -->
       <transition-group name='list-complete' tag='p'>
-        <div class='box list-complete-item' :key='index' v-for='({ homeTeam, awayTeam, boxscore, profile }, index) in games'>
-          <div class='columns'>
-            <div class='column'>
-              <div class='score-detail'>
-                <div class='name is-pulled-left'>
-                  <b>{{ awayTeam.profile.name }}</b>
-                  {{ toLocaleTime(profile.utcMillis) }}
-                </div>
-                <div class='score is-pulled-right'>
-                  {{ boxscore.awayScore }}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class='columns'>
-            <div class='column'>
-              <div class='score-detail'>
-                <div class='name is-pulled-left'>
-                  <b>{{ homeTeam.profile.name }}</b>
-                </div>
-                <div class='score is-pulled-right'>
-                  {{ boxscore.homeScore }}
-                </div>
-              </div>
-            </div>
-          </div>
+        <div class='box list-complete-item' :key='index' v-for='game, index in games'>
+          <game :game='game' />
         </div>
       </transition-group>
     </div>
@@ -45,6 +21,7 @@
 
 <script>
 import axios from 'axios'
+const Game = () => import('@/components/ScoreBoard/Game')
 
 export default {
   name: 'ScoreBoard',
@@ -65,7 +42,7 @@ export default {
       this.fetching = true
 
       try {
-        const { data } = await axios.get(`https://nba-proxy.now.sh/http://fr.global.nba.com/stats2/scores/daily.json`, { params: {
+        const { data } = await axios.get('https://nba-proxy.now.sh/http://fr.global.nba.com/stats2/scores/daily.json', { params: {
           gameDate: this.formattedDate,
           countryCode: 'FR',
           locale: 'FR'
@@ -79,11 +56,15 @@ export default {
       this.fetching = false
     },
     async onNext () {
+      if (this.fetching) { return }
+
       this.date = new Date(this.date.getTime() + 86400000)
 
       await this.fetchGames()
     },
     async onPrev () {
+      if (this.fetching) { return }
+
       this.date = new Date(this.date.getTime() - 86400000)
 
       await this.fetchGames()
@@ -96,6 +77,9 @@ export default {
     formattedDate () {
       return `${this.date.toISOString().split('T')[0]}`
     }
+  },
+  components: {
+    Game
   }
 }
 </script>
@@ -111,18 +95,7 @@ export default {
   /*transition: all 0.5s;*/
   /*opacity: 0;*/
 }
-
-.box {
-/*  transition: all 2s;
-  -webkit-transition: all 2s;
-*/}
-.score {
-  /*text-align: left;*/
+div.game {
+  margin-bottom: 1rem;
 }
-
-.score > .score-detail {
-  /*background-color: red;*/
-/*  width: 100%;
-  height: 100%;
-*/}
 </style>
