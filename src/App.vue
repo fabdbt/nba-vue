@@ -12,9 +12,11 @@
 import Vue from 'vue'
 import Icon from 'vue-awesome/components/Icon'
 import ScoreBoard from './components/ScoreBoard'
+import VueLazyload from 'vue-lazyload'
 import 'bulma/css/bulma.css'
 
 Vue.component('icon', Icon)
+Vue.use(VueLazyload)
 
 export default {
   name: 'app',

@@ -17,11 +17,14 @@
       <tbody>
         <tr>
           <td>
-            <icon name='home' scale='2' CLASS='text-center' />
-            {{ homeTeam.profile.abbr }}
-            <img class='team-logo' :src='homeTeamLgo' type='image/svg+xml' alt='' />
+            <p>
+              <icon name='home' scale='1' />
+              <span>{{ homeTeam.profile.city }} {{ homeTeam.profile.name }}</span>
+            </p>
           </td>
-          <td><a href="https://en.wikipedia.org/wiki/Leicester_City_F.C." title="Leicester City F.C.">{{ homeTeam.profile.city }} {{ homeTeam.profile.name }}</a></td>
+          <td>
+            <img class='team-logo' v-lazy='homeTeamLogoPath' type='image/svg+xml' :alt='homeTeam.profile.abbr' />
+          </td>
           <td>{{ homeTeam.matchup.wins }} / {{ homeTeam.matchup.losses }}</td>
           <td>{{ homeTeam.score.q1Score }}</td>
           <td>{{ homeTeam.score.q2Score }}</td>
@@ -30,8 +33,12 @@
           <td>{{ boxScore.homeScore }}</td>
         </tr>
         <tr>
-          <td>{{ awayTeam.profile.abbr }}</td>
-          <td><a href="https://en.wikipedia.org/wiki/Leicester_City_F.C." title="Leicester City F.C.">{{ awayTeam.profile.city }} {{ awayTeam.profile.name }}</a></td>
+          <td>
+            <span>{{ awayTeam.profile.city }} {{ awayTeam.profile.name }}</span>
+          </td>
+          <td>
+            <img class='team-logo' v-lazy='awayTeamLogoPath' type='image/svg+xml' :alt='awayTeam.profile.abbr' />
+          </td>
           <td>{{ awayTeam.matchup.wins }} / {{ awayTeam.matchup.losses }}</td>
           <td>{{ awayTeam.score.q1Score }}</td>
           <td>{{ awayTeam.score.q2Score }}</td>
@@ -60,7 +67,12 @@ export default {
     awayTeam () { return this.game.awayTeam },
     boxScore () { return this.game.boxscore },
     profile () { return this.game.profile },
-    homeTeamLgo () { return `/assets/images/logos/ ${this.homeTeam.profile.abbr}_logo.svg` }
+    homeTeamLogoPath () {
+      return `/static/images/logos/${this.homeTeam.profile.abbr}_logo.svg`
+    },
+    awayTeamLogoPath () {
+      return `/static/images/logos/${this.awayTeam.profile.abbr}_logo.svg`
+    }
   },
   methods: {
     toLocaleTime (utcMillis) {
@@ -77,5 +89,10 @@ table {
 
 img.team-logo {
   width: 50px;
+  margin: 0 auto;
+  text-align: center;
+}
+td, th {
+  text-align: center !important;
 }
 </style>
