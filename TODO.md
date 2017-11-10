@@ -1,1 +1,3 @@
 - Cache HTTP requests
+- Lazy load images
+- Filtre equipe

@@ -3,13 +3,15 @@
     <div class='content'>
       <h1>NBA scores</h1>
       <p>
-        <b>{{ formattedDate }}</b>
+        <b v-show='!fetching'>{{ formattedDate }}</b>
+        <icon v-show='fetching' name='spinner' spin/>
       </p>
+
       <nav class="pagination is-small" role="navigation" aria-label="pagination">
         <a class="pagination-previous" @click='onPrev' :disabled='fetching'>Previous</a>
-        <a class="pagination-next" @click='onNext' :disabled='fetching'>Next page</a>
+        <a class="pagination-next" @click='onNext' :disabled='fetching'>Next</a>
       </nav>
-      <!-- <span v-show='fetching'>Fetching ...</span> -->
+
       <transition-group name='list-complete' tag='p'>
         <div class='box list-complete-item' :key='index' v-for='game, index in games'>
           <game :game='game' />
@@ -21,6 +23,7 @@
 
 <script>
 import axios from 'axios'
+import 'vue-awesome/icons/spinner'
 const Game = () => import('@/components/ScoreBoard/Game')
 
 export default {
@@ -38,7 +41,7 @@ export default {
   },
   methods: {
     async fetchGames () {
-      this.games = []
+      // this.games = []
       this.fetching = true
 
       try {
@@ -68,9 +71,6 @@ export default {
       this.date = new Date(this.date.getTime() - 86400000)
 
       await this.fetchGames()
-    },
-    toLocaleTime (utcMillis) {
-      return new Date(parseInt(utcMillis)).toLocaleString().split(',')[1]
     }
   },
   computed: {
@@ -85,16 +85,25 @@ export default {
 </script>
 
 <style scoped>
-.list-complete-item {
+/*.list-complete-item {
   transition: all 0.2s;
 }
 .list-complete-enter, .list-complete-leave-to {
   opacity: 0;
 }
-.list-complete-leave-active {
+.list-complete-leave-active {*/
   /*transition: all 0.5s;*/
   /*opacity: 0;*/
+/*}*/
+
+nav {
+  margin-bottom: 1rem;
 }
+
+nav > a {
+  transition: .5s ease all;
+}
+
 div.game {
   margin-bottom: 1rem;
 }
