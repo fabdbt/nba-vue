@@ -6,13 +6,14 @@
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
-    "start": "npm run dev",
+    "start": "PORT=8080 serve dist",
     "build": "node build/build.js",
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
     "axios": "^0.17.0",
     "bulma": "^0.6.0",
+    "serve": "^6.4.1",
     "vue": "^2.5.2",
     "vue-awesome": "^2.3.4",
     "vue-lazyload": "^1.1.4"
