@@ -1,3 +1,3 @@
 - Cache HTTP requests
-- Lazy load images
-- Filtre equipe
+- LIVE logo if live
+- CSS transition on score
