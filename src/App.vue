@@ -1,5 +1,14 @@
 <template>
   <div id='app'>
+    <header class='hero is-light'>
+      <div class='hero-body'>
+        <div class='container'>
+          <h1 class='title'>
+            NBA scores
+          </h1>
+        </div>
+      </div>
+    </header>
     <section class='section'>
       <div class='container'>
         <ScoreBoard/>
@@ -28,11 +37,10 @@ export default {
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: 'Barlow', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
