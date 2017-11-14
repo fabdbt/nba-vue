@@ -6,45 +6,42 @@
         <icon v-show='fetching' name='spinner' spin/>
       </p>
 
-      <nav class="pagination is-small" role="navigation" aria-label="pagination">
-        <a class="pagination-previous" @click='onPrev' :disabled='fetching'>Previous</a>
-        <a class="pagination-next" @click='onNext' :disabled='fetching'>Next</a>
-      </nav>
+      <navigation :fetching='fetching' @onNext='onNext' @onPrev='onPrev' />
 
-      <transition-group name='list-complete' tag='p'>
-        <div class='box list-complete-item' :key='index' v-for='game, index in games'>
-          <game :game='game' />
-        </div>
-      </transition-group>
+      <div class='box' :key='index' v-for='game, index in dailyGames'>
+        <game :game='game' />
+      </div>
+
+      <navigation v-if='games.length > 0' :fetching='fetching' @onNext='onNext' @onPrev='onPrev' />
     </div>
   </div>
 </template>
 
 <script>
+import Vue from 'vue'
 import axios from 'axios'
 import 'vue-awesome/icons/spinner'
 const Game = () => import('@/components/ScoreBoard/Game')
+const Navigation = () => import('@/components/ScoreBoard/Navigation')
 
 export default {
   name: 'ScoreBoard',
   data () {
     return {
-      games: [],
+      games: {},
       date: null,
-      fetching: false,
-      api: null
+      fetching: false
     }
   },
   created () {
+    this.$ga.page('/')
+
     this.date = new Date()
     // Set date to yesterday
     this.date.setDate(this.date.getDate() - 1)
-
-    this.fetchGames()
   },
   methods: {
     async fetchGames () {
-      // this.games = []
       this.fetching = true
 
       try {
@@ -54,60 +51,58 @@ export default {
           locale: 'FR'
         } })
 
-        this.games = data.payload.date.games
+        // Reactivity
+        Vue.set(this.games, this.formattedDate, data.payload.date.games)
       } catch (e) {
         console.log(e)
       }
 
       this.fetching = false
     },
+    async setDailyGames () {
+      if (this.dailyGames.length === 0) {
+        await this.fetchGames()
+      }
+    },
     async onNext () {
       if (this.fetching) { return }
 
       this.date = new Date(this.date.getTime() + 86400000)
-
-      await this.fetchGames()
     },
     async onPrev () {
       if (this.fetching) { return }
 
       this.date = new Date(this.date.getTime() - 86400000)
-
-      await this.fetchGames()
     }
   },
   computed: {
     formattedDate () {
       return `${this.date.toISOString().split('T')[0]}`
+    },
+    dailyGames () {
+      return this.games[this.formattedDate] || []
     }
   },
   components: {
-    Game
+    Game,
+    Navigation
+  },
+  watch: {
+    date (val, old) {
+      this.setDailyGames()
+    }
   }
 }
 </script>
 
-<style scoped>
-/*.list-complete-item {
-  transition: all 0.5s;
-}
-.list-complete-enter, .list-complete-leave-to {
-  opacity: 0;
-}
-.list-complete-leave-active {
-  transition: all 0.5s;
-  opacity: 0;
-}*/
-
-nav {
+<style lang='scss' scoped>
+div.navigation-component {
   margin-bottom: 1rem;
 }
 
-nav > a {
-  transition: .5s ease all;
-}
-
-div.game {
-  margin-bottom: 1rem;
+.box {
+  -webkit-box-shadow: 0px 3px 21px -4px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 3px 21px -4px rgba(0,0,0,0.75);
+  box-shadow: 0px 3px 21px -4px rgba(0,0,0,0.75);
 }
 </style>

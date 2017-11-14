@@ -1,3 +1,3 @@
-- Cache HTTP requests
-- LIVE logo if live
 - CSS transition on score
+- Live reloading
+- Tests

@@ -43,4 +43,10 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
+
+header.hero {
+  -webkit-box-shadow: 0px 3px 21px -4px rgba(0,0,0,0.3);
+  -moz-box-shadow: 0px 3px 21px -4px rgba(0,0,0,0.3);
+  box-shadow: 0px 3px 21px -4px rgba(0,0,0,0.3);
+}
 </style>
