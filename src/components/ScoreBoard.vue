@@ -2,7 +2,7 @@
   <div class='scoreboard'>
     <div class='content'>
       <p>
-        <b v-show='!fetching'>{{ formattedDate }}</b>
+        <strong v-show='!fetching'>{{ formattedDate }}</strong>
         <icon v-show='fetching' name='spinner' spin/>
       </p>
 
