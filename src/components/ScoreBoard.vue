@@ -12,7 +12,7 @@
         <game :game='game' />
       </div>
 
-      <navigation v-if='games.length > 0' :fetching='fetching' @onNext='onNext' @onPrev='onPrev' />
+      <navigation v-if='dailyGames.length > 0' :fetching='fetching' @onNext='onNext' @onPrev='onPrev' />
     </div>
   </div>
 </template>
