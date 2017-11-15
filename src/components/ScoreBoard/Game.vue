@@ -92,7 +92,7 @@ export default {
   },
   methods: {
     toLocaleTime (utcMillis) {
-      return new Date(parseInt(utcMillis)).toLocaleDateString()
+      return new Date(parseInt(utcMillis)).toLocaleTimeString()
     }
   }
 }
