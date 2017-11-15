@@ -92,7 +92,7 @@ export default {
   },
   methods: {
     toLocaleTime (utcMillis) {
-      return new Date(parseInt(utcMillis)).toLocaleString().split(',')[1]
+      return new Date(parseInt(utcMillis)).toLocaleDateString()
     }
   }
 }
@@ -135,8 +135,6 @@ table.game-score {
 
   td.current-period {
     background-color: whitesmoke;
-    /*  border-left: 1px solid black;
-    border-right: 1px solid black; */
   }
 
   img.team-logo {

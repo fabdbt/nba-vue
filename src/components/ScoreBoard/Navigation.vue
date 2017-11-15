@@ -29,6 +29,6 @@ export default {
 
 <style lang='scss' scoped>
 nav > a {
-  transition: .5s ease all;
+  transition: .3s ease all;
 }
 </style>

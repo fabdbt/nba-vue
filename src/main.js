@@ -3,8 +3,10 @@
 import Vue from 'vue'
 import App from './App'
 import VueAnalytics from 'vue-analytics'
+import SocialSharing from 'vue-social-sharing'
 
 Vue.config.productionTip = false
+Vue.use(SocialSharing)
 Vue.use(VueAnalytics, {
   id: 'UA-109683884-1',
   checkDuplicatedScript: true

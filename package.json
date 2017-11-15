@@ -17,7 +17,8 @@
     "vue": "^2.5.2",
     "vue-analytics": "^5.3.1",
     "vue-awesome": "^2.3.4",
-    "vue-lazyload": "^1.1.4"
+    "vue-lazyload": "^1.1.4",
+    "vue-social-sharing": "^2.2.10"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
