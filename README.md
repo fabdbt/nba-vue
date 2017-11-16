@@ -1,5 +1,7 @@
 # nba-vue
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/Apokly/nba-vue.svg)](https://greenkeeper.io/)
+
 > A Vue.js project
 
 ## Build Setup
