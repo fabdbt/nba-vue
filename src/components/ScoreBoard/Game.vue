@@ -78,10 +78,10 @@ export default {
     boxScore () { return this.game.boxscore },
     profile () { return this.game.profile },
     homeTeamLogoPath () {
-      return `/static/images/logos/${this.homeTeam.profile.abbr}_logo.svg`
+      return `/images/logos/${this.homeTeam.profile.abbr}_logo.svg`
     },
     awayTeamLogoPath () {
-      return `/static/images/logos/${this.awayTeam.profile.abbr}_logo.svg`
+      return `/images/logos/${this.awayTeam.profile.abbr}_logo.svg`
     },
     isLive () {
       return !this.profile.scheduleCode && !!this.boxScore.periodClock
