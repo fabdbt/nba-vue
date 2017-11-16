@@ -1,13 +1,13 @@
 {
   "name": "nba-vue",
   "version": "1.0.0",
-  "description": "A Vue.js project",
-  "author": "Fabien Dobat <fabien.dobat@seniormedia.fr>",
+  "description": "A simple Vue project that displays daily NBA scores",
+  "author": "Fabien Dobat <fabien.dobat@gmail.com>",
   "private": true,
   "scripts": {
-    "dev": "node build/dev-server.js",
-    "start": "PORT=8080 serve dist",
-    "build": "node build/build.js",
+    "dev": "node_modules/poi/bin/cli.js --template-compiler",
+    "start": "serve dist",
+    "build": "node_modules/poi/bin/cli.js build --template-compiler",
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
@@ -53,6 +53,7 @@
     "opn": "^5.1.0",
     "optimize-css-assets-webpack-plugin": "^3.2.0",
     "ora": "^1.2.0",
+    "poi": "^9.5.2",
     "portfinder": "^1.0.13",
     "rimraf": "^2.6.0",
     "sass-loader": "^6.0.6",
@@ -69,7 +70,7 @@
     "webpack-merge": "^4.1.0"
   },
   "engines": {
-    "node": ">= 4.0.0",
+    "node": ">= 9.0.0",
     "npm": ">= 3.0.0"
   },
   "browserslist": [
