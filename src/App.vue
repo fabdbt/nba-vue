@@ -47,7 +47,6 @@ import Vue from 'vue'
 import Icon from 'vue-awesome/components/Icon'
 import ScoreBoard from './components/ScoreBoard'
 import VueLazyload from 'vue-lazyload'
-import 'bulma/css/bulma.css'
 import 'vue-awesome/icons/twitter'
 import 'vue-awesome/icons/github'
 
@@ -63,8 +62,9 @@ export default {
 </script>
 
 <style lang='scss'>
+@import '~@/assets/stylesheets/bulma-self';
+
 #app {
-  font-family: 'Barlow', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -72,12 +72,19 @@ export default {
 }
 
 header.hero {
-  -webkit-box-shadow: 0px 3px 21px -4px rgba(0,0,0,0.3);
-  -moz-box-shadow: 0px 3px 21px -4px rgba(0,0,0,0.3);
-  box-shadow: 0px 3px 21px -4px rgba(0,0,0,0.3);
+  -webkit-box-shadow: 0px 3px 21px -4px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0px 3px 21px -4px rgba(0,0,0,0.2);
+  box-shadow: 0px 3px 21px -4px rgba(0,0,0,0.2);
+
+  @include mobile {
+    .hero-body {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
+  }
 }
 
-footer {
+footer.footer {
   padding: 2rem 2rem !important;
 
   .social-sharing {
@@ -87,6 +94,13 @@ footer {
       vertical-align: middle;
       transition: .2s ease color;
     }
+  }
+}
+
+@include mobile {
+  section.section {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
   }
 }
 </style>

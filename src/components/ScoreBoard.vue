@@ -96,13 +96,20 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@import '~@/assets/stylesheets/bulma-self';
+
 div.navigation-component {
   margin-bottom: 1rem;
 }
 
 .box {
-  -webkit-box-shadow: 0px 3px 21px -4px rgba(0,0,0,0.75);
-  -moz-box-shadow: 0px 3px 21px -4px rgba(0,0,0,0.75);
-  box-shadow: 0px 3px 21px -4px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 0px 3px 21px -4px rgba(0,0,0,0.3);
+  -moz-box-shadow: 0px 3px 21px -4px rgba(0,0,0,0.3);
+  box-shadow: 0px 3px 21px -4px rgba(0,0,0,0.3);
+
+  @include mobile {
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+  }
 }
 </style>

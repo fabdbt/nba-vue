@@ -7,9 +7,14 @@
       </span>
     </div>
     <div v-else>
-      <p class='time'>
-        <icon name='clock-o' class='v-align' scale='1' />
-        {{ toLocaleTime(profile.utcMillis) }}
+      <p class='head'>
+        <span>
+          <icon name='clock-o' scale='1' class='star v-align' />
+          {{ toLocaleTime(profile.utcMillis) }}
+        </span>
+        <span class='star' v-if='isImportant && !isLive' >
+          <icon name='star' class='v-align' scale='1' />
+        </span>
       </p>
     </div>
     <table class='table game-score'>
@@ -18,10 +23,10 @@
           <th>Team</th>
           <th class='is-hidden-mobile'>Logo</th> <!-- Volontary hide Logo instead of Team in mobile -->
           <th class='is-hidden-mobile'><abbr title='Wins / Losses'>Ratio</abbr></th>
-          <th :class='{ "current-period": livePeriod === "1"  }'>Q1</th>
-          <th :class='{ "current-period": livePeriod === "2"  }'>Q2</th>
-          <th :class='{ "current-period": livePeriod === "3"  }'>Q3</th>
-          <th :class='{ "current-period": livePeriod === "4"  }'>Q4</th>
+          <th :class='{ "current-period": livePeriod === "1" }'>Q1</th>
+          <th :class='{ "current-period": livePeriod === "2" }'>Q2</th>
+          <th :class='{ "current-period": livePeriod === "3" }'>Q3</th>
+          <th :class='{ "current-period": livePeriod === "4" }'>Q4</th>
           <th>Final</th>
         </tr>
       </thead>
@@ -31,29 +36,29 @@
             <icon name='home' class='v-align' scale='1' />
             <span>{{ homeTeam.profile.city }} {{ homeTeam.profile.name }}</span>
           </td>
-          <td>
+          <td class='logo'>
             <img class='team-logo' v-lazy='homeTeamLogoPath' type='image/svg+xml' :alt='homeTeam.profile.abbr' />
           </td>
           <td class='is-hidden-mobile'>{{ homeTeam.matchup.wins }} / {{ homeTeam.matchup.losses }}</td>
-          <td :class='{ "current-period": livePeriod === "1"  }'>{{ homeTeam.score.q1Score }}</td>
-          <td :class='{ "current-period": livePeriod === "2"  }'>{{ homeTeam.score.q2Score }}</td>
-          <td :class='{ "current-period": livePeriod === "3"  }'>{{ homeTeam.score.q3Score }}</td>
-          <td :class='{ "current-period": livePeriod === "4"  }'>{{ homeTeam.score.q4Score }}</td>
-          <td class='test'>{{ boxScore.homeScore }}</td>
+          <td :class='{ "current-period": livePeriod === "1" }'>{{ homeTeam.score.q1Score }}</td>
+          <td :class='{ "current-period": livePeriod === "2" }'>{{ homeTeam.score.q2Score }}</td>
+          <td :class='{ "current-period": livePeriod === "3" }'>{{ homeTeam.score.q3Score }}</td>
+          <td :class='{ "current-period": livePeriod === "4" }'>{{ homeTeam.score.q4Score }}</td>
+          <td><b>{{ boxScore.homeScore }}</b></td>
         </tr>
         <tr>
           <td class='is-hidden-mobile'>
             <span>{{ awayTeam.profile.city }} {{ awayTeam.profile.name }}</span>
           </td>
-          <td>
+          <td class='logo'>
             <img class='team-logo' v-lazy='awayTeamLogoPath' type='image/svg+xml' :alt='awayTeam.profile.abbr' />
           </td>
           <td class='is-hidden-mobile'>{{ awayTeam.matchup.wins }} / {{ awayTeam.matchup.losses }}</td>
-          <td :class='{ "current-period": livePeriod === "1"  }'>{{ awayTeam.score.q1Score }}</td>
-          <td :class='{ "current-period": livePeriod === "2"  }'>{{ awayTeam.score.q2Score }}</td>
-          <td :class='{ "current-period": livePeriod === "3"  }'>{{ awayTeam.score.q3Score }}</td>
-          <td :class='{ "current-period": livePeriod === "4"  }'>{{ awayTeam.score.q4Score }}</td>
-          <td>{{ boxScore.awayScore }}</td>
+          <td :class='{ "current-period": livePeriod === "1" }'>{{ awayTeam.score.q1Score }}</td>
+          <td :class='{ "current-period": livePeriod === "2" }'>{{ awayTeam.score.q2Score }}</td>
+          <td :class='{ "current-period": livePeriod === "3" }'>{{ awayTeam.score.q3Score }}</td>
+          <td :class='{ "current-period": livePeriod === "4" }'>{{ awayTeam.score.q4Score }}</td>
+          <td><b>{{ boxScore.awayScore }}</b></td>
         </tr>
       </tbody>
     </table>
@@ -63,6 +68,9 @@
 <script>
 import 'vue-awesome/icons/home'
 import 'vue-awesome/icons/clock-o'
+import 'vue-awesome/icons/star'
+
+const maxImportantConfRank = 8
 
 export default {
   name: 'Game',
@@ -88,6 +96,9 @@ export default {
     },
     livePeriod () {
       return this.isLive && this.boxScore.period
+    },
+    isImportant () {
+      return [this.homeTeam.matchup.confRank, this.awayTeam.matchup.confRank].every(r => parseInt(r) <= maxImportantConfRank)
     }
   },
   methods: {
@@ -99,6 +110,8 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@import '~@/assets/stylesheets/bulma-self';
+
 @keyframes live {
   0% {
     transform: scale( .8 );
@@ -142,13 +155,34 @@ table.game-score {
     margin: 0 auto;
     text-align: center;
   }
+
+  @include mobile {
+    margin-bottom: 0;
+
+    td.logo {
+      padding-top: 0.1rem;
+      padding-bottom: 0.1rem;
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
 }
 
 .v-align {
   vertical-align: middle;
 }
 
-p.time {
+p.head {
   margin-bottom: 1rem;
+}
+
+span.star {
+  color: #f4c242;
+}
+
+@include mobile {
+  p.head {
+    margin-bottom: 0 !important;
+  }
 }
 </style>
