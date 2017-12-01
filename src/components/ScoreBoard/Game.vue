@@ -110,8 +110,6 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-@import '~@/assets/stylesheets/bulma-self';
-
 @keyframes live {
   0% {
     transform: scale( .8 );
@@ -151,20 +149,10 @@ table.game-score {
   }
 
   img.team-logo {
-    width: 50px;
+    width: 3rem;
+    min-width: 1.5rem;
     margin: 0 auto;
     text-align: center;
-  }
-
-  @include mobile {
-    margin-bottom: 0;
-
-    td.logo {
-      padding-top: 0.1rem;
-      padding-bottom: 0.1rem;
-      padding-left: 0;
-      padding-right: 0;
-    }
   }
 }
 
@@ -178,11 +166,5 @@ p.head {
 
 span.star {
   color: #f4c242;
-}
-
-@include mobile {
-  p.head {
-    margin-bottom: 0 !important;
-  }
 }
 </style>
