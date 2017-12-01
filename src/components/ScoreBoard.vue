@@ -8,9 +8,11 @@
 
       <navigation :fetching='fetching' @onNext='onNext' @onPrev='onPrev' />
 
-      <div class='box' :key='index' v-for='game, index in dailyGames'>
-        <game :game='game' />
-      </div>
+        <v-touch v-on:swipeleft='onNext' v-on:swiperight='onPrev'>
+          <div class='box' :key='index' v-for='game, index in dailyGames'>
+            <game :game='game' />
+          </div>
+        </v-touch>
 
       <navigation v-if='dailyGames.length > 0' :fetching='fetching' @onNext='onNext' @onPrev='onPrev' />
     </div>

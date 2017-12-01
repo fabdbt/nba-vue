@@ -4,8 +4,10 @@ import Vue from 'vue'
 import App from './App'
 import VueAnalytics from 'vue-analytics'
 import SocialSharing from 'vue-social-sharing'
+import VueTouch from 'vue-touch'
 
 Vue.config.productionTip = false
+Vue.use(VueTouch)
 Vue.use(SocialSharing)
 Vue.use(VueAnalytics, {
   id: 'UA-109683884-1',
