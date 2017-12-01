@@ -36,8 +36,6 @@ export default {
     }
   },
   created () {
-    this.$ga.page('/')
-
     this.date = new Date()
     // Set date to yesterday
     this.date.setDate(this.date.getDate() - 1)
@@ -91,6 +89,8 @@ export default {
   },
   watch: {
     date (val, old) {
+      this.$ga.page('/')
+
       this.setDailyGames()
     }
   }
