@@ -6,6 +6,11 @@
         <div class='live'></div>
       </span>
     </div>
+    <div v-else-if='isFinish'>
+      <p class='head'>
+        <b>Final</b>
+      </p>
+    </div>
     <div v-else>
       <p class='head'>
         <span>
@@ -13,7 +18,7 @@
           {{ toLocaleTime(profile.utcMillis) }}
         </span>
         <span class='star' v-if='isImportant && !isLive' >
-          <icon name='star' class='v-align' scale='1' />
+          <icon name='star' scale='1' />
         </span>
       </p>
     </div>
@@ -94,6 +99,9 @@ export default {
     isLive () {
       return !this.profile.scheduleCode && !!this.boxScore.periodClock
     },
+    isFinish () {
+      return this.boxScore.statusDesc === 'Final'
+    },
     livePeriod () {
       return this.isLive && this.boxScore.period
     },
@@ -150,7 +158,7 @@ table.game-score {
 
   img.team-logo {
     width: 3rem;
-    min-width: 1.5rem;
+    min-width: 1.8rem;
     margin: 0 auto;
     text-align: center;
   }
