@@ -7,6 +7,10 @@ import SocialSharing from 'vue-social-sharing'
 import VueTouch from 'vue-touch'
 
 Vue.config.productionTip = false
+VueTouch.config.swipe = {
+  direction: 'horizontal'
+}
+
 Vue.use(VueTouch)
 Vue.use(SocialSharing)
 Vue.use(VueAnalytics, {

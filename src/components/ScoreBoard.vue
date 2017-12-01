@@ -8,7 +8,7 @@
 
       <navigation :fetching='fetching' @onNext='onNext' @onPrev='onPrev' />
 
-        <v-touch v-on:swipeleft='onNext' v-on:swiperight='onPrev'>
+        <v-touch class='games' v-on:swipeleft='onNext' v-on:swiperight='onPrev'>
           <div class='box' :key='index' v-for='game, index in dailyGames'>
             <game :game='game' />
           </div>
@@ -98,13 +98,14 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-div.navigation-component {
-  margin-bottom: 1rem;
-}
-
 .box {
   -webkit-box-shadow: 0px 3px 21px -4px rgba(0,0,0,0.3);
   -moz-box-shadow: 0px 3px 21px -4px rgba(0,0,0,0.3);
   box-shadow: 0px 3px 21px -4px rgba(0,0,0,0.3);
+}
+
+.games {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 </style>
