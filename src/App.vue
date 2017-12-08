@@ -47,11 +47,13 @@ import Vue from 'vue'
 import Icon from 'vue-awesome/components/Icon'
 import ScoreBoard from './components/ScoreBoard'
 import VueLazyload from 'vue-lazyload'
+import VueSocketio from 'vue-socket.io'
 import 'bulma/css/bulma.css'
 import 'vue-awesome/icons/twitter'
 import 'vue-awesome/icons/github'
 
 Vue.component('icon', Icon)
+Vue.use(VueSocketio, 'http://localhost:8081')
 Vue.use(VueLazyload)
 
 export default {

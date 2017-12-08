@@ -40,6 +40,14 @@ export default {
     // Set date to yesterday
     this.date.setDate(this.date.getDate() - 1)
   },
+  sockets: {
+    // connect () {
+    //   console.log('socket connected')
+    // },
+    news (val) {
+      console.log(val)
+    }
+  },
   methods: {
     async fetchGames () {
       this.fetching = true
