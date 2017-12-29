@@ -9,9 +9,9 @@
         </div>
       </div>
     </header>
-    <section class='section'>
+    <section class='section main'>
       <div class='container'>
-        <ScoreBoard/>
+        <router-view></router-view>
       </div>
     </section>
     <footer class='footer'>
@@ -32,7 +32,7 @@
                 </network>
               </span>
             </social-sharing>
-            <a href='https://github.com/Apokly/nba-vue' target='_blank'>
+            <a href='https://github.com/Apokly/nba-vue' rel='noopener'>
               <icon name='github' scale='1' />
             </a>
           </div>
@@ -45,7 +45,6 @@
 <script>
 import Vue from 'vue'
 import Icon from 'vue-awesome/components/Icon'
-import ScoreBoard from './components/ScoreBoard'
 import VueLazyload from 'vue-lazyload'
 import 'bulma/css/bulma.css'
 import 'vue-awesome/icons/twitter'
@@ -55,10 +54,7 @@ Vue.component('icon', Icon)
 Vue.use(VueLazyload)
 
 export default {
-  name: 'app',
-  components: {
-    ScoreBoard
-  }
+  name: 'app'
 }
 </script>
 
@@ -74,6 +70,16 @@ header.hero {
   -webkit-box-shadow: 0px 3px 21px -4px rgba(0,0,0,0.2);
   -moz-box-shadow: 0px 3px 21px -4px rgba(0,0,0,0.2);
   box-shadow: 0px 3px 21px -4px rgba(0,0,0,0.2);
+
+  .hero-body {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+}
+
+section.main {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 footer.footer {

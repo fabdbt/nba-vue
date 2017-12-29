@@ -5,6 +5,8 @@ import App from './App'
 import VueAnalytics from 'vue-analytics'
 import SocialSharing from 'vue-social-sharing'
 import VueTouch from 'vue-touch'
+import router from './router'
+import store from './store'
 
 Vue.config.productionTip = false
 VueTouch.config.swipe = {
@@ -22,5 +24,7 @@ Vue.use(VueAnalytics, {
 new Vue({
   el: '#app',
   template: '<App/>',
-  components: { App }
+  components: { App },
+  router,
+  store
 })

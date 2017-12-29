@@ -27,7 +27,7 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
+<style lang='css' scoped>
 nav > a {
   transition: .3s ease all;
 }
