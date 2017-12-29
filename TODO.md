@@ -1,3 +1,0 @@
-- CSS transition on score
-- Live reloading
-- Tests

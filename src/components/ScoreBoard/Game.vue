@@ -1,27 +1,25 @@
 <template>
   <div class='game'>
-    <div v-if='isLive'>
-      <span class='tag'>
-        <span>Live</span>
-        <div class='live'></div>
-      </span>
-    </div>
-    <div v-else-if='isFinish'>
-      <p class='head'>
+    <p class='head'>
+      <template v-if='isLive'>
+        <span class='tag'>
+          <span>Live</span>
+          <div class='live'></div>
+        </span>
+      </template>
+      <template v-else-if='isFinish'>
         <b>Final</b>
-      </p>
-    </div>
-    <div v-else>
-      <p class='head'>
+      </template>
+      <template v-else>
         <span>
           <icon name='clock-o' scale='1' class='star v-align' />
-          {{ toLocaleTime(profile.utcMillis) }}
+          <b>{{ toLocaleTime(profile.utcMillis) }}</b>
         </span>
         <span class='star' v-if='isImportant && !isLive' >
-          <icon name='star' scale='1' />
+          <icon name='star' scale='1' class='v-align' />
         </span>
-      </p>
-    </div>
+      </template>
+    </p>
     <table class='table game-score'>
       <thead>
         <tr>
@@ -67,6 +65,10 @@
         </tr>
       </tbody>
     </table>
+    <div v-if='!isFinish && broadcasters' class='has-text-right'>
+      <icon name='tv' class='v-align' scale='1' />
+      <span class='is-size-7'>{{ broadcasters }}</span>
+    </div>
   </div>
 </template>
 
@@ -74,6 +76,7 @@
 import 'vue-awesome/icons/home'
 import 'vue-awesome/icons/clock-o'
 import 'vue-awesome/icons/star'
+import 'vue-awesome/icons/tv'
 
 const maxImportantConfRank = 8
 
@@ -91,27 +94,30 @@ export default {
     boxScore () { return this.game.boxscore },
     profile () { return this.game.profile },
     homeTeamLogoPath () {
-      return `/images/logos/${this.homeTeam.profile.abbr}_logo.svg`
+      return `/static/img/logos/${this.homeTeam.profile.abbr}_logo.svg`
     },
     awayTeamLogoPath () {
-      return `/images/logos/${this.awayTeam.profile.abbr}_logo.svg`
+      return `/static/img/logos/${this.awayTeam.profile.abbr}_logo.svg`
     },
     isLive () {
-      return !this.profile.scheduleCode && !!this.boxScore.periodClock
+      return this.boxScore.status === '2'
     },
     isFinish () {
-      return this.boxScore.statusDesc === 'Final'
+      return this.boxScore.status === '3'
     },
     livePeriod () {
       return this.isLive && this.boxScore.period
     },
     isImportant () {
       return [this.homeTeam.matchup.confRank, this.awayTeam.matchup.confRank].every(r => parseInt(r) <= maxImportantConfRank)
+    },
+    broadcasters () {
+      return this.game.broadcasters.map(b => b.name).join(', ')
     }
   },
   methods: {
     toLocaleTime (utcMillis) {
-      return new Date(parseInt(utcMillis)).toLocaleTimeString()
+      return new Date(parseInt(utcMillis)).toLocaleTimeString('fr-fr')
     }
   }
 }

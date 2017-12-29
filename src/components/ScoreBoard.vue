@@ -9,95 +9,56 @@
       <navigation :fetching='fetching' @onNext='onNext' @onPrev='onPrev' />
 
         <v-touch class='games' v-on:swipeleft='onNext' v-on:swiperight='onPrev'>
-          <div class='box' :key='index' v-for='game, index in dailyGames'>
+          <div class='box' :key='index' v-for='game, index in games'>
             <game :game='game' />
           </div>
         </v-touch>
 
-      <navigation v-if='dailyGames.length > 0' :fetching='fetching' @onNext='onNext' @onPrev='onPrev' />
+      <navigation v-if='games.length > 0' :fetching='fetching' @onNext='onNext' @onPrev='onPrev' />
     </div>
   </div>
 </template>
 
 <script>
-import Vue from 'vue'
-import axios from 'axios'
+import { mapState, mapGetters } from 'vuex'
 import 'vue-awesome/icons/spinner'
 const Game = () => import('@/components/ScoreBoard/Game')
 const Navigation = () => import('@/components/ScoreBoard/Navigation')
 
 export default {
   name: 'ScoreBoard',
-  data () {
-    return {
-      games: {},
-      date: null,
-      fetching: false
-    }
-  },
-  created () {
-    this.date = new Date()
-    // Set date to yesterday
-    this.date.setDate(this.date.getDate() - 1)
-  },
   methods: {
-    async fetchGames () {
-      this.fetching = true
-
-      try {
-        const { data } = await axios.get('https://nba-proxy.now.sh/http://fr.global.nba.com/stats2/scores/daily.json', { params: {
-          gameDate: this.formattedDate,
-          countryCode: 'FR',
-          locale: 'FR'
-        } })
-
-        // Reactivity
-        Vue.set(this.games, this.formattedDate, data.payload.date.games)
-      } catch (e) {
-        console.log(e)
-      }
-
-      this.fetching = false
-    },
-    async setDailyGames () {
-      if (this.dailyGames.length === 0) {
-        await this.fetchGames()
-      }
-    },
     async onNext () {
       if (this.fetching) { return }
 
-      this.date = new Date(this.date.getTime() + 86400000)
+      this.$router.push({ name: 'ScoreBoard', params: { date: this.formattedTomorrowDate } })
     },
     async onPrev () {
       if (this.fetching) { return }
 
-      this.date = new Date(this.date.getTime() - 86400000)
+      this.$router.push({ name: 'ScoreBoard', params: { date: this.formattedYesterdayDate } })
     }
   },
   computed: {
-    formattedDate () {
-      return `${this.date.toISOString().split('T')[0]}`
-    },
-    dailyGames () {
-      return this.games[this.formattedDate] || []
-    }
+    ...mapState({
+      date: state => state.games.date,
+      games: state => state.games.all,
+      fetching: state => state.games.fetching
+    }),
+    ...mapGetters('games', [
+      'formattedTomorrowDate',
+      'formattedYesterdayDate',
+      'formattedDate'
+    ])
   },
   components: {
     Game,
     Navigation
-  },
-  watch: {
-    date (val, old) {
-      this.$ga.page('/')
-
-      this.setDailyGames()
-    }
   }
 }
 </script>
 
-<style lang='scss' scoped>
+<style lang='css' scoped>
 .box {
   -webkit-box-shadow: 0px 3px 21px -4px rgba(0,0,0,0.3);
   -moz-box-shadow: 0px 3px 21px -4px rgba(0,0,0,0.3);
