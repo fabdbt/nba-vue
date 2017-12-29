@@ -17,7 +17,12 @@ Vue.use(VueTouch)
 Vue.use(SocialSharing)
 Vue.use(VueAnalytics, {
   id: 'UA-109683884-1',
-  checkDuplicatedScript: true
+  router,
+  checkDuplicatedScript: true,
+  autoTracking: {
+    page: true,
+    prependBase: false
+  }
 })
 
 /* eslint-disable no-new */
