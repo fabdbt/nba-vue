@@ -107,7 +107,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       stripPrefix: 'dist/',
       runtimeCaching: [
       {
-        urlPattern: /^http:\/\/192.168.1.27:8081\//,
+        urlPattern: /^https:\/\/nba-proxy.now.sh\//,
         handler: 'networkFirst'
       }]
     })
