@@ -12,22 +12,11 @@
       </template>
       <template v-else>
         <span>
-          <icon
-            name="clock"
-            scale="1"
-            class="star v-align"
-          />
+          <icon name="clock" scale="1" class="star v-align" />
           <b>{{ toLocaleTime(profile.utcMillis) }}</b>
         </span>
-        <span
-          v-if="isImportant && !isLive"
-          class="star"
-        >
-          <icon
-            name="star"
-            scale="1"
-            class="v-align"
-          />
+        <span v-if="isImportant && !isLive" class="star">
+          <icon name="star" scale="1" class="v-align" />
         </span>
       </template>
     </p>
@@ -35,36 +24,22 @@
       <thead>
         <tr>
           <th>Team</th>
-          <th class="is-hidden-mobile">
-            Logo
-          </th>
+          <th class="is-hidden-mobile">Logo</th>
           <!-- Volontary hide Logo instead of Team in mobile -->
           <th class="is-hidden-mobile">
             <abbr title="Wins / Losses">Ratio</abbr>
           </th>
-          <th :class="{ 'current-period': livePeriod === '1' }">
-            Q1
-          </th>
-          <th :class="{ 'current-period': livePeriod === '2' }">
-            Q2
-          </th>
-          <th :class="{ 'current-period': livePeriod === '3' }">
-            Q3
-          </th>
-          <th :class="{ 'current-period': livePeriod === '4' }">
-            Q4
-          </th>
+          <th :class="{ 'current-period': livePeriod === '1' }">Q1</th>
+          <th :class="{ 'current-period': livePeriod === '2' }">Q2</th>
+          <th :class="{ 'current-period': livePeriod === '3' }">Q3</th>
+          <th :class="{ 'current-period': livePeriod === '4' }">Q4</th>
           <th>Final</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td class="is-hidden-mobile">
-            <icon
-              name="home"
-              class="v-align"
-              scale="1"
-            />
+            <icon name="home" class="v-align" scale="1" />
             <span>{{ homeTeam.profile.city }} {{ homeTeam.profile.name }}</span>
           </td>
           <td class="logo">
@@ -73,7 +48,7 @@
               class="team-logo"
               type="image/svg+xml"
               :alt="homeTeam.profile.abbr"
-            >
+            />
           </td>
           <td class="is-hidden-mobile">
             {{ homeTeam.matchup.wins }} / {{ homeTeam.matchup.losses }}
@@ -104,7 +79,7 @@
               class="team-logo"
               type="image/svg+xml"
               :alt="awayTeam.profile.abbr"
-            >
+            />
           </td>
           <td class="is-hidden-mobile">
             {{ awayTeam.matchup.wins }} / {{ awayTeam.matchup.losses }}
@@ -127,15 +102,8 @@
         </tr>
       </tbody>
     </table>
-    <div
-      v-if="!isFinish && broadcasters"
-      class="has-text-right"
-    >
-      <icon
-        name="tv"
-        class="v-align"
-        scale="1"
-      />
+    <div v-if="!isFinish && broadcasters" class="has-text-right">
+      <icon name="tv" class="v-align" scale="1" />
       <span class="is-size-7">{{ broadcasters }}</span>
     </div>
   </div>

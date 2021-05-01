@@ -3,9 +3,7 @@
     <header class="hero is-light">
       <div class="hero-body">
         <div class="container">
-          <h1 class="title">
-            NBA scores
-          </h1>
+          <h1 class="title">NBA scores</h1>
         </div>
       </div>
     </header>
@@ -28,26 +26,14 @@
             >
               <span>
                 <network network="twitter">
-                  <a
-                    href="#"
-                    class="v-align"
-                  >
-                    <icon
-                      name="twitter"
-                      scale="1"
-                    />
+                  <a href="#" class="v-align">
+                    <icon name="twitter" scale="1" />
                   </a>
                 </network>
               </span>
             </social-sharing>
-            <a
-              href="https://github.com/Apokly/nba-vue"
-              rel="noopener"
-            >
-              <icon
-                name="github"
-                scale="1"
-              />
+            <a href="https://github.com/Apokly/nba-vue" rel="noopener">
+              <icon name="github" scale="1" />
             </a>
           </div>
         </div>

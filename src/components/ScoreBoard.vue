@@ -8,8 +8,8 @@
 
       <navigation :fetching="fetching" @onNext="onNext" @onPrev="onPrev" />
 
-      <v-touch class="games" v-on:swipeleft="onNext" v-on:swiperight="onPrev">
-        <div class="box" :key="index" v-for="(game, index) in games">
+      <v-touch class="games" @swipeleft="onNext" @swiperight="onPrev">
+        <div v-for="(game, index) in games" :key="index" class="box">
           <game :game="game" />
         </div>
       </v-touch>
@@ -32,6 +32,22 @@ const Navigation = () => import("@/components/ScoreBoard/Navigation");
 
 export default {
   name: "ScoreBoard",
+  components: {
+    Game,
+    Navigation,
+  },
+  computed: {
+    ...mapState({
+      date: (state) => state.games.date,
+      games: (state) => state.games.all,
+      fetching: (state) => state.games.fetching,
+    }),
+    ...mapGetters("games", [
+      "formattedTomorrowDate",
+      "formattedYesterdayDate",
+      "formattedDate",
+    ]),
+  },
   methods: {
     async onNext() {
       if (this.fetching) {
@@ -53,22 +69,6 @@ export default {
         params: { date: this.formattedYesterdayDate },
       });
     },
-  },
-  computed: {
-    ...mapState({
-      date: (state) => state.games.date,
-      games: (state) => state.games.all,
-      fetching: (state) => state.games.fetching,
-    }),
-    ...mapGetters("games", [
-      "formattedTomorrowDate",
-      "formattedYesterdayDate",
-      "formattedDate",
-    ]),
-  },
-  components: {
-    Game,
-    Navigation,
   },
 };
 </script>

@@ -1,16 +1,16 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import games from './modules/games'
+import Vue from "vue";
+import Vuex from "vuex";
+import games from "./modules/games";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 const store = new Vuex.Store({
   modules: {
     games: {
       namespaced: true,
-      ...games
-    }
-  }
-})
+      ...games,
+    },
+  },
+});
 
-export default store
+export default store;
